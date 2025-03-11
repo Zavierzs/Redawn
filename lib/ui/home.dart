@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import 'mood_analysis.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,17 +10,17 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   bool _showIndicator = false;
   bool _isLoading = false;
 
   static final List<Widget> widgetOptions = <Widget>[
     // Add your pages here
-    Text('Page 1'),
-    Text('Page 2'),
+    MoodAnalysisPage(),
+    Text('Healing Hub Coming Soon'),
     HomePageContent(),
-    Text('Page 4'),
-    Text('Page 5'),
+    Text('Journal Coming Soon'),
+    Text('User Profile'),
   ];
 
   void _onItemTapped(int index) {
