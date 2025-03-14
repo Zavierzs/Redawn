@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Redawn',
+      debugShowCheckedModeBanner: false,
       home: const OnboardingScreen(),
       routes: {'/home': (context) => HomePage()},
     );
