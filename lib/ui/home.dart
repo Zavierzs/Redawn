@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
 import 'mood_analysis.dart';
+import 'userProfile.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   HomePageState createState() => HomePageState();
@@ -12,15 +13,15 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   int _selectedIndex = 2;
   bool _showIndicator = false;
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   static final List<Widget> widgetOptions = <Widget>[
     // Add your pages here
-    MoodAnalysisPage(),
-    Text('Healing Hub Coming Soon'),
-    HomePageContent(),
-    Text('Journal Coming Soon'),
-    Text('User Profile'),
+    const MoodAnalysisPage(),
+    const Text('Healing Hub Coming Soon'),
+    const HomePageContent(),
+    const Text('Journal Coming Soon'),
+    const UserProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -73,33 +74,35 @@ class HomePageState extends State<HomePage> {
 }
 
 class HomePageContent extends StatelessWidget {
+  const HomePageContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       child: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 40),
-            CircleAvatar(
+            const SizedBox(height: 40),
+            const CircleAvatar(
               radius: 40,
               backgroundColor: Colors.yellow,
               child: Icon(Icons.person, size: 40, color: Colors.black),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               "Hi Maria",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 5),
-            Text(
+            const SizedBox(height: 5),
+            const Text(
               "Saturday, 25 January",
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
-            SizedBox(height: 20),
-            Row(
+            const SizedBox(height: 20),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.pets, size: 30),
@@ -110,7 +113,7 @@ class HomePageContent extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -119,7 +122,7 @@ class HomePageContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Padding(
+              child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 child: Text(
                   "Check Mood",
@@ -127,14 +130,14 @@ class HomePageContent extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 color: Colors.lightGreen.shade100,
                 borderRadius: BorderRadius.circular(15),
               ),
-              padding: EdgeInsets.all(16),
-              child: Column(
+              padding: const EdgeInsets.all(16),
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(

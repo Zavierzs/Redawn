@@ -43,7 +43,8 @@ dependencies:
   shared_preferences: ^2.0.6
   smooth_page_indicator: ^1.2.1
   carousel_slider: ^4.2.1
-
+  fluttertoast: ^8.2.12
+  google_sign_in: 6.2.2
 
 dev_dependencies:
   flutter_test:
@@ -85,3 +86,4 @@ flutter:
     - assets/images/Onboarding1.png
     - assets/images/Onboarding2.png
     - assets/images/Onboarding3.png
+    - assets/images/google-logo.webp
