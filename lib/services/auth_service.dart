@@ -169,13 +169,14 @@ class AuthService {
 
       // Create and return a custom User object
       if (firebaseUser != null) {
-        // Load user details from Firestore
-        model.User? user = await model.UserCredentials().loadFromFirestore();
-        if (user == null) {
-          // If user data does not exist, create a new user object
-          user = model.User.fromFirebaseUser(firebaseUser);
-          await model.UserCredentials().saveToFirestore(user);
-        }
+        // Store user details in the UserCredentials singleton instance
+        model.UserCredentials().email = firebaseUser.email ?? '';
+        model.UserCredentials().uid = firebaseUser.uid;
+        model.UserCredentials().displayName = firebaseUser.displayName ?? '';
+        model.UserCredentials().profilePicUrl = firebaseUser.photoURL ?? '';
+
+        // Save user details to shared preferences
+        await model.UserCredentials().saveToPreferences();
 
         // Navigate to the home page
         Navigator.pushReplacement(
