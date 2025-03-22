@@ -12,7 +12,6 @@ import 'package:redawn/ui/login.dart';
 import 'package:redawn/ui/signup.dart';
 import 'package:redawn/ui/userProfile.dart';
 
-
 import 'components/button.dart';
 
 void main() async {
