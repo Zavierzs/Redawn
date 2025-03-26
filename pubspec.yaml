@@ -78,12 +78,5 @@ flutter:
           style: italic
 
   assets:
-    - assets/icons/mood.png
-    - assets/icons/heart.png
-    - assets/icons/home.png
-    - assets/icons/diary.png
-    - assets/icons/user.png
-    - assets/images/Onboarding1.png
-    - assets/images/Onboarding2.png
-    - assets/images/Onboarding3.png
-    - assets/images/google-logo.webp
+    - assets/icons/
+    - assets/images/
