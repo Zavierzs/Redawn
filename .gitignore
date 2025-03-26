@@ -13,6 +13,9 @@ migrate_working_dir/
 # Android related
 /android/
 
+# Build folder
+/build/
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -72,7 +75,7 @@ ios/Runner/GeneratedPluginRegistrant.*
 # Exclude Large Gradle Caches & Wrappers
 android/caches/
 android/wrapper/dists/
-android/java_pid2836.hprof
+android/java_pid*.hprof
 
 # Exclude Large Generated JARs
 **/android/caches/generated-gradle-jars/
