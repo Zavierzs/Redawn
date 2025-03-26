@@ -3,6 +3,7 @@ import '../models/user.dart';
 import '../services/auth_service.dart';
 import '../theme.dart';
 import 'login.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -13,6 +14,7 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   final UserCredentials _userCredentials = UserCredentials();
+  User? _user;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _displayNameController = TextEditingController();
@@ -22,8 +24,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
-  final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _weightController = TextEditingController();
 
   @override
   void initState() {
@@ -32,38 +32,72 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   Future<void> _loadUserData() async {
-    await _userCredentials.loadFromPreferences();
-    setState(() {
-      _emailController.text = _userCredentials.email ?? '';
-      _displayNameController.text = _userCredentials.displayName ?? '';
-      _realNameController.text = _userCredentials.realName ?? '';
-      _nricController.text = _userCredentials.nric ?? '';
-      _addressController.text = _userCredentials.address ?? '';
-      _phoneNumberController.text = _userCredentials.phoneNumber ?? '';
-      _ageController.text = _userCredentials.age?.toString() ?? '';
-      _genderController.text = _userCredentials.gender ?? '';
-      _heightController.text = _userCredentials.height?.toString() ?? '';
-      _weightController.text = _userCredentials.weight?.toString() ?? '';
-    });
+    try {
+      _user = await _userCredentials.loadFromFirestore();
+      if (_user != null) {
+        setState(() {
+          _emailController.text = _user!.email;
+          _displayNameController.text = _user!.displayName;
+          _realNameController.text = _user!.realName ?? '';
+          _nricController.text = _user!.nric ?? '';
+          _addressController.text = _user!.address ?? '';
+          _phoneNumberController.text = _user!.phoneNumber ?? '';
+          _ageController.text = _user!.age?.toString() ?? '';
+          _genderController.text = _user!.gender ?? '';
+        });
+      } else {
+        // Handle case where user data is not found
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('User data not found.')));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error loading user data: $e')),
+      );
+    }
   }
 
   Future<void> _saveUserData() async {
-    _userCredentials.updateUser(
-      email: _emailController.text,
-      displayName: _displayNameController.text,
-      realName: _realNameController.text,
-      nric: _nricController.text,
-      address: _addressController.text,
-      phoneNumber: _phoneNumberController.text,
-      age: int.tryParse(_ageController.text),
-      gender: _genderController.text,
-      height: double.tryParse(_heightController.text),
-      weight: double.tryParse(_weightController.text),
-    );
-    await _userCredentials.saveToPreferences();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('User data saved successfully')),
-    );
+    try {
+      if (_user == null) {
+        return;
+      }
+      final updatedUser = User(
+        uid: _user!.uid,
+        email: _emailController.text.isNotEmpty
+            ? _emailController.text
+            : _user!.email,
+        displayName: _displayNameController.text.isNotEmpty
+            ? _displayNameController.text
+            : _user!.displayName,
+        profilePicUrl: _user!.profilePicUrl, //keep the same profile pic url
+        realName: _realNameController.text.isNotEmpty
+            ? _realNameController.text
+            : _user!.realName,
+        nric: _nricController.text.isNotEmpty
+            ? _nricController.text
+            : _user!.nric,
+        address: _addressController.text.isNotEmpty
+            ? _addressController.text
+            : _user!.address,
+        phoneNumber: _phoneNumberController.text.isNotEmpty
+            ? _phoneNumberController.text
+            : _user!.phoneNumber,
+        age: int.tryParse(_ageController.text) ?? _user!.age,
+        gender: _genderController.text.isNotEmpty
+            ? _genderController.text
+            : _user!.gender,
+      );
+      await _userCredentials.saveToFirestore(updatedUser);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User data saved successfully')),
+      );
+      _loadUserData(); //reload the data to update the user object
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error saving user data: $e')),
+      );
+    }
   }
 
   Future<void> _logout() async {
@@ -118,16 +152,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 controller: _genderController,
                 decoration: const InputDecoration(labelText: 'Gender'),
               ),
-              TextField(
-                controller: _heightController,
-                decoration: const InputDecoration(labelText: 'Height'),
-                keyboardType: TextInputType.number,
-              ),
-              TextField(
-                controller: _weightController,
-                decoration: const InputDecoration(labelText: 'Weight'),
-                keyboardType: TextInputType.number,
-              ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveUserData,
@@ -138,7 +162,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ),
                   minimumSize: const Size(double.infinity, 50),
                 ),
-                child: const Text('Save', style: TextStyle(color: Colors.white)),
+                child:
+                    const Text('Save', style: TextStyle(color: Colors.white)),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
@@ -150,7 +175,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   ),
                   minimumSize: const Size(double.infinity, 50),
                 ),
-                child: const Text('Log Out', style: TextStyle(color: Colors.white)),
+                child: const Text('Log Out',
+                    style: TextStyle(color: Colors.white)),
               ),
             ],
           ),

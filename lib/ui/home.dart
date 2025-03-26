@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:redawn/ui/moodTracker.dart';
 import '../theme.dart';
 import 'mood_analysis.dart';
 import 'userProfile.dart';
@@ -45,11 +46,11 @@ class HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/icons/mood.png')),
-            label: '', 
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/icons/heart.png')),
-            label: '', 
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/icons/home.png')),
@@ -57,11 +58,11 @@ class HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/icons/diary.png')),
-            label: '', 
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: ImageIcon(AssetImage('assets/icons/user.png')),
-            label: '', 
+            label: '',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -102,33 +103,48 @@ class HomePageContent extends StatelessWidget {
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
             const SizedBox(height: 20),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.pets, size: 30),
-                SizedBox(width: 8),
-                Text(
-                  "How are you feeling now?",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                Image.asset('assets/images/homepageCat.png',
+                    width: 120, height: 120),
+                const SizedBox(width: 8),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "How are you feeling now?",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MoodTrackerPage(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        child: Text(
+                          "Check Mood",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                child: Text(
-                  "Check Mood",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ),
             ),
             const SizedBox(height: 20),
             Container(
@@ -151,7 +167,8 @@ class HomePageContent extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Icon(Icons.play_circle_fill, size: 40, color: Colors.white),
+                      Icon(Icons.play_circle_fill,
+                          size: 40, color: Colors.white),
                     ],
                   ),
                   SizedBox(height: 10),
