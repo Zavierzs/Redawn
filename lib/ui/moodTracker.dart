@@ -10,15 +10,22 @@ class MoodTrackerPage extends StatefulWidget {
 
 class _MoodTrackerPageState extends State<MoodTrackerPage> {
   int _selectedMoodIndex = -1;
+  String _selectedMoodName = ''; // Add this variable to store the mood name
   Set<String> _selectedReasons = {};
-  final TextEditingController _textController =
-      TextEditingController(); // Add a controller
+  final TextEditingController _textController = TextEditingController();
 
   final List<String> _moodImages = [
     'assets/icons/happy.png',
     'assets/icons/relaxed.png',
     'assets/icons/sad.png',
     'assets/icons/angry.png',
+  ];
+
+  final List<String> _moodNames = [
+    'Happy',
+    'Relaxed',
+    'Sad',
+    'Angry',
   ];
 
   final List<String> _reasons = [
@@ -42,6 +49,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
   void _onMoodSelected(int index) {
     setState(() {
       _selectedMoodIndex = index;
+      _selectedMoodName = _moodNames[index]; // Set the mood name based on index
     });
   }
 
@@ -116,8 +124,19 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                   }),
                 ),
                 const SizedBox(height: 20),
+                if (_selectedMoodName.isNotEmpty) ...[
+                  Text(
+                    'Selected Mood: $_selectedMoodName',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
                 TextField(
-                  controller: _textController, // Attach the controller
+                  controller: _textController,
                   decoration: InputDecoration(
                     hintText: 'Type Your Reason...',
                     hintStyle:

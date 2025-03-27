@@ -3,6 +3,9 @@ import 'package:redawn/ui/moodTracker.dart';
 import '../theme.dart';
 import 'mood_analysis.dart';
 import 'userProfile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -77,6 +80,31 @@ class HomePageState extends State<HomePage> {
 class HomePageContent extends StatelessWidget {
   const HomePageContent({super.key});
 
+  Future<String> _fetchUserName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return 'Guest'; // Default name if no user is logged in
+    }
+
+    final userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+
+    if (userDoc.exists) {
+      return userDoc.data()?['displayName'] ??
+          'Guest'; 
+    } else {
+      return 'Guest'; 
+    }
+  }
+
+  String _getCurrentDate() {
+    final now = DateTime.now();
+    return DateFormat('EEEE, d MMMM')
+        .format(now); 
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -93,14 +121,32 @@ class HomePageContent extends StatelessWidget {
               child: Icon(Icons.person, size: 40, color: Colors.black),
             ),
             const SizedBox(height: 10),
-            const Text(
-              "Hi Maria",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            FutureBuilder<String>(
+              future: _fetchUserName(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text(
+                    "Loading...",
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  );
+                } else if (snapshot.hasError) {
+                  return const Text(
+                    "Error",
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  );
+                } else {
+                  return Text(
+                    "Hi ${snapshot.data}",
+                    style: const TextStyle(
+                        fontSize: 22, fontWeight: FontWeight.bold),
+                  );
+                }
+              },
             ),
             const SizedBox(height: 5),
-            const Text(
-              "Saturday, 25 January",
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+            Text(
+              _getCurrentDate(), 
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
             const SizedBox(height: 20),
             Row(
@@ -110,7 +156,7 @@ class HomePageContent extends StatelessWidget {
                     width: 120, height: 120),
                 const SizedBox(width: 8),
                 Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Text(
                       "How are you feeling now?",
@@ -145,54 +191,6 @@ class HomePageContent extends StatelessWidget {
                   ],
                 ),
               ],
-            ),
-            const SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.lightGreen.shade100,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              padding: const EdgeInsets.all(16),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          "DECLUTTER THE NOISE IN YOUR MIND",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Icon(Icons.play_circle_fill,
-                          size: 40, color: Colors.white),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Declutter the noise in your mind ft Alexander",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.star, color: Colors.orange, size: 18),
-                          SizedBox(width: 4),
-                          Text("4.8"),
-                        ],
-                      ),
-                      Text("16.7K views"),
-                      Icon(Icons.favorite_border),
-                    ],
-                  ),
-                ],
-              ),
             ),
           ],
         ),
