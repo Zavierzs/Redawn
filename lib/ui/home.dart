@@ -5,6 +5,7 @@ import 'mood_analysis.dart';
 import 'userProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:redawn/ui/badMoodNotification.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +25,7 @@ class HomePageState extends State<HomePage> {
     const MoodAnalysisPage(),
     const Text('Healing Hub Coming Soon'),
     const HomePageContent(),
-    const Text('Journal Coming Soon'),
+    const Text('Coming Soon'),
     const UserProfilePage(),
   ];
 
@@ -92,17 +93,15 @@ class HomePageContent extends StatelessWidget {
         .get();
 
     if (userDoc.exists) {
-      return userDoc.data()?['displayName'] ??
-          'Guest'; 
+      return userDoc.data()?['displayName'] ?? 'Guest';
     } else {
-      return 'Guest'; 
+      return 'Guest';
     }
   }
 
   String _getCurrentDate() {
     final now = DateTime.now();
-    return DateFormat('EEEE, d MMMM')
-        .format(now); 
+    return DateFormat('EEEE, d MMMM').format(now);
   }
 
   @override
@@ -145,7 +144,7 @@ class HomePageContent extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              _getCurrentDate(), 
+              _getCurrentDate(),
               style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
             const SizedBox(height: 20),
@@ -191,6 +190,23 @@ class HomePageContent extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+             const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Call the dialog
+                BadMoodNotification.showBadMoodDialog(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text(
+                "Show Bad Mood Notification",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
