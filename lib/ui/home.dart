@@ -6,6 +6,7 @@ import 'userProfile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:redawn/ui/badMoodNotification.dart';
+import 'package:redawn/ui/crisisAlertNotification.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -191,11 +192,26 @@ class HomePageContent extends StatelessWidget {
                 ),
               ],
             ),
-             const SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Call the dialog
                 BadMoodNotification.showBadMoodDialog(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orangeAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text(
+                "Show Bad Mood Notification",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                CrisisAlertNotification.showCrisisAlertDialog(context);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -204,7 +220,7 @@ class HomePageContent extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                "Show Bad Mood Notification",
+                "Show Crisis Alert Notification",
                 style: TextStyle(color: Colors.white),
               ),
             ),
