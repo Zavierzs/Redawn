@@ -87,6 +87,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
 
       await userDoc.collection("moods").doc(date).collection("moodEntries").add({
         "mood": _selectedMoodName,
+        "moodIndex": _selectedMoodIndex,
         "reasons": _selectedReasons.toList(),
         "date": date,
         "time": time,
@@ -212,7 +213,6 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                         (reason) => reason.toLowerCase() == value.toLowerCase(),
                         orElse: () => '',
                       );
-
                       if (matchingReason.isNotEmpty) {
                         _selectedReasons.add(matchingReason);
                       } else {
