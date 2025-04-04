@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:redawn/theme.dart';
 
 class MoodTrackerPage extends StatefulWidget {
@@ -10,7 +13,7 @@ class MoodTrackerPage extends StatefulWidget {
 
 class _MoodTrackerPageState extends State<MoodTrackerPage> {
   int _selectedMoodIndex = -1;
-  String _selectedMoodName = ''; // Add this variable to store the mood name
+  String _selectedMoodName = '';
   Set<String> _selectedReasons = {};
   final TextEditingController _textController = TextEditingController();
 
@@ -49,7 +52,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
   void _onMoodSelected(int index) {
     setState(() {
       _selectedMoodIndex = index;
-      _selectedMoodName = _moodNames[index]; // Set the mood name based on index
+      _selectedMoodName = _moodNames[index];
     });
   }
 
@@ -61,6 +64,49 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
         _selectedReasons.add(reason);
       }
     });
+  }
+
+  Future<void> _saveMoodData() async {
+    if (_selectedMoodName.isEmpty || _selectedReasons.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please select a mood and reasons!")),
+      );
+      return;
+    }
+
+    try {
+      // Get user ID from Firebase Authentication
+      String userId = FirebaseAuth.instance.currentUser?.uid ?? "guest_user";
+
+      String date = DateFormat('yyyy-MM-dd').format(DateTime.now());
+      String time = DateFormat('HH:mm').format(DateTime.now());
+
+      // Reference to Firestore collection
+      DocumentReference userDoc =
+          FirebaseFirestore.instance.collection("users").doc(userId);
+
+      await userDoc.collection("moods").doc(date).collection("moodEntries").add({
+        "mood": _selectedMoodName,
+        "reasons": _selectedReasons.toList(),
+        "date": date,
+        "time": time,
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Mood saved successfully!")),
+      );
+
+      setState(() {
+        _selectedMoodIndex = -1;
+        _selectedMoodName = '';
+        _selectedReasons.clear();
+      });
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Failed to save mood: $e")),
+      );
+    }
   }
 
   @override
@@ -149,12 +195,12 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                     filled: true,
                     fillColor: Colors.white,
                     contentPadding: const EdgeInsets.symmetric(
-                      vertical: 12, // Adjust vertical padding
-                      horizontal: 16, // Adjust horizontal padding
+                      vertical: 12, 
+                      horizontal: 16, 
                     ),
                   ),
                   style:
-                      const TextStyle(fontSize: 16), // Adjust input text size
+                      const TextStyle(fontSize: 16),
                   onSubmitted: (value) {
                     setState(() {
                       if (value.isEmpty) {
@@ -168,14 +214,10 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                       );
 
                       if (matchingReason.isNotEmpty) {
-                        // If a match is found, select the reason
                         _selectedReasons.add(matchingReason);
                       } else {
-                        // If no match is found, create a temporary button
                         _selectedReasons.add(value);
                       }
-
-                      // Clear the text field
                       _textController.clear();
                     });
                   },
@@ -253,9 +295,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                 const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Handle mood submission here
-                    },
+                    onPressed: _saveMoodData,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.buttonColor,
                       shape: RoundedRectangleBorder(

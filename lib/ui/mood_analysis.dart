@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class MoodAnalysisPage extends StatelessWidget {
   const MoodAnalysisPage({super.key});
 

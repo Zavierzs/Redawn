@@ -70,7 +70,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
         displayName: _displayNameController.text.isNotEmpty
             ? _displayNameController.text
             : _user!.displayName,
-        profilePicUrl: _user!.profilePicUrl, //keep the same profile pic url
+        profilePicUrl: _user!.profilePicUrl, 
         realName: _realNameController.text.isNotEmpty
             ? _realNameController.text
             : _user!.realName,
