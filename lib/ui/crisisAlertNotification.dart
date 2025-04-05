@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redawn/theme.dart';
+import 'contact.dart';
+import 'counselling.dart';
 
 class CrisisAlertNotification {
   static void showCrisisAlertDialog(BuildContext context) {
@@ -57,7 +59,11 @@ class CrisisAlertNotification {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const ContactPage(),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppTheme.buttonColor,
@@ -81,7 +87,11 @@ class CrisisAlertNotification {
                             const SizedBox(width: 10),
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const CounsellingPage(),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppTheme.buttonColor,

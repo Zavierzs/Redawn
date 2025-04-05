@@ -208,7 +208,6 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                         return;
                       }
 
-                      // Check if the entered reason exists in the list
                       final matchingReason = _reasons.firstWhere(
                         (reason) => reason.toLowerCase() == value.toLowerCase(),
                         orElse: () => '',

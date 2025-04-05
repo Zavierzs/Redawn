@@ -5,9 +5,6 @@ class MoodAnalysisPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mood Analysis'),
-      ),
       body: const Center(
         child: Text('Mood Analysis Coming Soon'),
       ),

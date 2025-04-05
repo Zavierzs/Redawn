@@ -21,6 +21,14 @@ class HomePageState extends State<HomePage> {
   bool _showIndicator = false;
   final bool _isLoading = false;
 
+  static final List<String> pageTitles = [
+    'Mood Analysis',
+    'Healing Hub',
+    'Home Page',
+    'Diary',
+    'User Profile',
+  ];
+
   static final List<Widget> widgetOptions = <Widget>[
     // Add your pages here
     const MoodAnalysisPage(),
@@ -41,7 +49,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: Text(pageTitles[_selectedIndex]),
       ),
       body: Center(
         child: widgetOptions.elementAt(_selectedIndex),
