@@ -200,38 +200,6 @@ class HomePageContent extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                BadMoodNotification.showBadMoodDialog(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orangeAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text(
-                "Show Bad Mood Notification",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                CrisisAlertNotification.showCrisisAlertDialog(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text(
-                "Show Crisis Alert Notification",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
           ],
         ),
       ),

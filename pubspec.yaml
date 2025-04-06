@@ -45,8 +45,9 @@ dependencies:
   carousel_slider: ^4.2.1
   fluttertoast: ^8.2.12
   google_sign_in: 6.2.2
-
   intl: ^0.18.0 
+  fl_chart: ^0.70.2
+  percent_indicator: ^4.2.2
 
 dev_dependencies:
   flutter_test:
@@ -61,7 +62,6 @@ flutter_launcher_icons:
   ios: true
   image_path: "assets/images/Redawn_Logo.png"
 
-# The following section is specific to Flutter packages.
 flutter:
 
   # The following line ensures that the Material Icons font is

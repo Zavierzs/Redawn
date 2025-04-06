@@ -187,7 +187,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                   decoration: InputDecoration(
                     hintText: 'Type Your Reason...',
                     hintStyle:
-                        const TextStyle(fontSize: 14), // Adjust hint text size
+                        const TextStyle(fontSize: 14),
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
