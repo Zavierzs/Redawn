@@ -82,8 +82,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
       String time = DateFormat('HH:mm').format(DateTime.now());
 
       // Reference to Firestore collection
-      DocumentReference userDoc =
-          FirebaseFirestore.instance.collection("users").doc(userId);
+      DocumentReference userDoc = FirebaseFirestore.instance.collection("users").doc(userId);
 
       await userDoc.collection("moods").doc(date).collection("moodEntries").add({
         "mood": _selectedMoodName,
