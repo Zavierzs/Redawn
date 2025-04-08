@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'journalDetailed.dart';
+import 'package:redawn/theme.dart';
 
 class MoodCalendar extends StatefulWidget {
   @override
@@ -17,9 +18,15 @@ class _MoodCalendarState extends State<MoodCalendar> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mood Calendar'),
+        title: Text(
+          'Mood Calendar',
+          style: TextStyle(
+            color: Colors
+                .white, 
+          ),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        backgroundColor: AppTheme.buttonColor,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -33,25 +40,23 @@ class _MoodCalendarState extends State<MoodCalendar> {
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
                     setState(() {
-                      currentDate = DateTime(
-                        currentDate.year,
-                        currentDate.month - 1,
-                      );
-                      print(
-                          'Current Date (Back): $currentDate'); // Debugging output
+                      currentDate =
+                          DateTime(currentDate.year, currentDate.month - 1);
                     });
                   },
                 ),
                 Expanded(
+                  // Instead of Flexible
                   child: Center(
                     child: Text(
-                      DateFormat('MMMM yyyy')
-                          .format(currentDate), // Month name in the middle
+                      DateFormat('MMMM yyyy').format(currentDate),
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: const Color(0xFFFD6C9),
+                        color: Color(0xFFFFD6C9), // Updated color to FFD6C9
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
@@ -59,29 +64,25 @@ class _MoodCalendarState extends State<MoodCalendar> {
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () {
                     setState(() {
-                      currentDate = DateTime(
-                        currentDate.year,
-                        currentDate.month + 1,
-                      );
-                      print(
-                          'Current Date (Forward): $currentDate'); // Debugging output
+                      currentDate =
+                          DateTime(currentDate.year, currentDate.month + 1);
                     });
                   },
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            // Calendar grid
-            Expanded(
+            SizedBox(
+              height: 500, 
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 7,
-                  childAspectRatio: 1,
+                  crossAxisCount: 7, // 7 columns for days of the week
+                  childAspectRatio: 0.8, // Make cells square
                 ),
                 itemCount: daysInMonth + firstWeekday,
                 itemBuilder: (context, index) {
                   if (index < firstWeekday) {
-                    return Container();
+                    return Container(); // Empty cells for days before the first day of the month
                   }
                   int day = index - firstWeekday + 1;
                   bool isBeforeApril9 = currentDate.month < 4 ||
