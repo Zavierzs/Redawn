@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redawn/theme.dart';
+import 'contact.dart';
+import 'counselling.dart';
 
 class CrisisAlertNotification {
   static void showCrisisAlertDialog(BuildContext context) {
@@ -8,9 +10,9 @@ class CrisisAlertNotification {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: const Color(0xFFFFD6C9),
-          contentPadding: EdgeInsets.zero, // Remove default padding
+          contentPadding: EdgeInsets.zero, 
           content: Padding(
-            padding: const EdgeInsets.all(20), // Add padding around the content
+            padding: const EdgeInsets.all(20),
             child: SizedBox(
               height: 550,
               child: Stack(
@@ -57,7 +59,11 @@ class CrisisAlertNotification {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const ContactPage(),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppTheme.buttonColor,
@@ -81,7 +87,11 @@ class CrisisAlertNotification {
                             const SizedBox(width: 10),
                             ElevatedButton(
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const CounsellingPage(),
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppTheme.buttonColor,
@@ -95,7 +105,7 @@ class CrisisAlertNotification {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  const Text('Counselling'),
+                                  const Text('Counsellor'),
                                   const SizedBox(width: 5),
                                   Image.asset('assets/icons/counselling.png',
                                       width: 20, height: 20),

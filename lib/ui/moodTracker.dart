@@ -82,8 +82,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
       String time = DateFormat('HH:mm').format(DateTime.now());
 
       // Reference to Firestore collection
-      DocumentReference userDoc =
-          FirebaseFirestore.instance.collection("users").doc(userId);
+      DocumentReference userDoc = FirebaseFirestore.instance.collection("users").doc(userId);
 
       await userDoc.collection("moods").doc(date).collection("moodEntries").add({
         "mood": _selectedMoodName,
@@ -187,7 +186,7 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                   decoration: InputDecoration(
                     hintText: 'Type Your Reason...',
                     hintStyle:
-                        const TextStyle(fontSize: 14), // Adjust hint text size
+                        const TextStyle(fontSize: 14),
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -208,7 +207,6 @@ class _MoodTrackerPageState extends State<MoodTrackerPage> {
                         return;
                       }
 
-                      // Check if the entered reason exists in the list
                       final matchingReason = _reasons.firstWhere(
                         (reason) => reason.toLowerCase() == value.toLowerCase(),
                         orElse: () => '',

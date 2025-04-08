@@ -21,6 +21,14 @@ class HomePageState extends State<HomePage> {
   bool _showIndicator = false;
   final bool _isLoading = false;
 
+  static final List<String> pageTitles = [
+    'Mood Analysis',
+    'Healing Hub',
+    'Home Page',
+    'Diary',
+    'User Profile',
+  ];
+
   static final List<Widget> widgetOptions = <Widget>[
     // Add your pages here
     const MoodAnalysisPage(),
@@ -41,7 +49,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Page'),
+        title: Text(pageTitles[_selectedIndex]),
       ),
       body: Center(
         child: widgetOptions.elementAt(_selectedIndex),
@@ -191,38 +199,6 @@ class HomePageContent extends StatelessWidget {
                   ],
                 ),
               ],
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                BadMoodNotification.showBadMoodDialog(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orangeAccent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text(
-                "Show Bad Mood Notification",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                CrisisAlertNotification.showCrisisAlertDialog(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text(
-                "Show Crisis Alert Notification",
-                style: TextStyle(color: Colors.white),
-              ),
             ),
           ],
         ),
