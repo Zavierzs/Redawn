@@ -11,6 +11,7 @@ import 'package:redawn/ui/home.dart';
 import 'package:redawn/ui/login.dart';
 import 'package:redawn/ui/signup.dart';
 import 'package:redawn/ui/userProfile.dart';
+import 'package:redawn/ui/journal.dart';
 
 import 'components/button.dart';
 
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUpPage(),
         '/profile': (context) => const UserProfilePage(),
+        '/journal': (context) => MoodCalendar(),
       },
     );
   }
@@ -127,22 +129,27 @@ class OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             ),
-
           Positioned(
             bottom: 30,
             left: 20,
             right: 20,
             child: Center(
               child: button(
-                text: _currentIndex == images.length - 1 ? 'Get Started!' : 'Next',
+                text: _currentIndex == images.length - 1
+                    ? 'Get Started!'
+                    : 'Next',
                 onPressed: () async {
                   if (_currentIndex < images.length - 1) {
                     setState(() => _currentIndex++);
                   } else {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
                     await prefs.setBool('onBoard', true);
                     if (!mounted) return;
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AuthWrapper()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AuthWrapper()));
                   }
                 },
               ),

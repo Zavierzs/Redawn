@@ -1,0 +1,150 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'journalDetailed.dart';
+
+class MoodCalendar extends StatefulWidget {
+  @override
+  _MoodCalendarState createState() => _MoodCalendarState();
+}
+
+class _MoodCalendarState extends State<MoodCalendar> {
+  DateTime currentDate = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    int daysInMonth = DateTime(currentDate.year, currentDate.month + 1, 0).day;
+    int firstWeekday = DateTime(currentDate.year, currentDate.month, 1).weekday;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Mood Calendar'),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            // Header with month and year, and navigation buttons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    setState(() {
+                      currentDate = DateTime(
+                        currentDate.year,
+                        currentDate.month - 1,
+                      );
+                      print(
+                          'Current Date (Back): $currentDate'); // Debugging output
+                    });
+                  },
+                ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      DateFormat('MMMM yyyy')
+                          .format(currentDate), // Month name in the middle
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFFFD6C9),
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.arrow_forward),
+                  onPressed: () {
+                    setState(() {
+                      currentDate = DateTime(
+                        currentDate.year,
+                        currentDate.month + 1,
+                      );
+                      print(
+                          'Current Date (Forward): $currentDate'); // Debugging output
+                    });
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            // Calendar grid
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 7,
+                  childAspectRatio: 1,
+                ),
+                itemCount: daysInMonth + firstWeekday,
+                itemBuilder: (context, index) {
+                  if (index < firstWeekday) {
+                    return Container();
+                  }
+                  int day = index - firstWeekday + 1;
+                  bool isBeforeApril9 = currentDate.month < 4 ||
+                      (currentDate.month == 4 && day <= 8);
+
+                  return GestureDetector(
+                    onTap: () {
+                      if (!isBeforeApril9) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JournalDetailed(
+                              selectedDate: DateTime(
+                                currentDate.year,
+                                currentDate.month,
+                                day,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.teal.shade300),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '$day',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal.shade700,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            isBeforeApril9 ? _getEmojiForDay(day) : '+',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.teal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _getEmojiForDay(int day) {
+    const emojis = ['😊', '😢', '😡', '😂', '😌'];
+    return emojis[(day - 1) % emojis.length];
+  }
+}
