@@ -12,14 +12,38 @@ class HealingSide extends StatefulWidget {
 }
 
 class _HealingSideState extends State<HealingSide> {
-  int _selectedIndex = 0; // 0 = History, 1 = Favourites
+  int _selectedIndex = 0;
 
+  // Mock data for posts
   final List<Map<String, dynamic>> historyPosts = [
-    // Add your history posts here...
+    {
+      'title': 'My First Journal',
+      'description': 'This is the description for the first journal.',
+      'imagePath': 'assets/images/post.jpg',
+      'type': 'history',
+      'likeCount': 5,
+      'commentCount': 2,
+    },
+    {
+      'title': 'A Memorable Day',
+      'description': 'This journal talks about a memorable day in my life.',
+      'imagePath': 'assets/images/post.jpg',
+      'type': 'history',
+      'likeCount': 8,
+      'commentCount': 3,
+    },
   ];
 
   final List<Map<String, dynamic>> favouritePosts = [
-    // Add your favourite posts here...
+    {
+      'title': 'Favourite Journal Entry',
+      'description':
+          'This is a journal that I really love and keep coming back to.',
+      'imagePath': 'assets/images/post.jpg',
+      'type': 'favourite',
+      'likeCount': 15,
+      'commentCount': 7,
+    },
   ];
 
   @override
@@ -34,7 +58,6 @@ class _HealingSideState extends State<HealingSide> {
       ),
       body: Column(
         children: [
-          // Passing the onTabChange callback to NavBar
           NavBar(
             onTabChange: (index) {
               setState(() {
@@ -43,21 +66,23 @@ class _HealingSideState extends State<HealingSide> {
             },
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: currentPosts.length,
-              itemBuilder: (context, index) {
-                return Post(
-                  title: currentPosts[index]['title'] ?? 'No Title',
-                  description:
-                      currentPosts[index]['description'] ?? 'No Description',
-                  imagePath: currentPosts[index]['imagePath'] ??
-                      'assets/images/post.jpg',
-                  type: currentPosts[index]['type'] ?? '',
-                  likeCount: currentPosts[index]['likeCount'],
-                  commentCount: currentPosts[index]['commentCount'],
-                );
-              },
-            ),
+            child: currentPosts.isEmpty
+                ? Center(child: Text('No posts available'))
+                : ListView.builder(
+                    itemCount: currentPosts.length,
+                    itemBuilder: (context, index) {
+                      return Post(
+                        title: currentPosts[index]['title'] ?? 'No Title',
+                        description: currentPosts[index]['description'] ??
+                            'No Description',
+                        imagePath: currentPosts[index]['imagePath'] ??
+                            'assets/images/post.jpg',
+                        type: currentPosts[index]['type'] ?? '',
+                        likeCount: currentPosts[index]['likeCount'],
+                        commentCount: currentPosts[index]['commentCount'],
+                      );
+                    },
+                  ),
           ),
         ],
       ),

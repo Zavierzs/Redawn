@@ -98,7 +98,7 @@ class HealingHub extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.document_scanner, color: Colors.teal),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/anotherPage');
+                    Navigator.pushNamed(context, '/healingSide');
                   },
                 ),
               ],

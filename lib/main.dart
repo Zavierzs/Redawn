@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 import 'package:redawn/services/auth_service.dart';
-
 import 'package:redawn/ui/home.dart';
 import 'package:redawn/ui/login.dart';
 import 'package:redawn/ui/signup.dart';
 import 'package:redawn/ui/userProfile.dart';
 import 'package:redawn/ui/journal.dart';
-
+import 'package:redawn/ui/mood_analysis.dart';
+import 'package:redawn/ui/healingHub/healingSide.dart';
 import 'components/button.dart';
 
 void main() async {
@@ -34,13 +33,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Redawn',
       debugShowCheckedModeBanner: false,
-      home: const AuthWrapper(), // Automatically redirects user
+      home: const AuthWrapper(),
       routes: {
         '/home': (context) => const HomePage(),
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUpPage(),
         '/profile': (context) => const UserProfilePage(),
         '/journal': (context) => MoodCalendar(),
+        '/healingSide': (context) => HealingSide(title: 'My Healing Record'),
       },
     );
   }
@@ -54,7 +54,7 @@ class AuthWrapper extends StatefulWidget {
 }
 
 class _AuthWrapperState extends State<AuthWrapper> {
-  bool? _showOnboarding; // Use `null` initially to handle async loading
+  bool? _showOnboarding;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
   @override
   Widget build(BuildContext context) {
     if (_showOnboarding == null) {
-      return const Center(child: CircularProgressIndicator()); // Show loading
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (_showOnboarding!) {
@@ -86,9 +86,9 @@ class _AuthWrapperState extends State<AuthWrapper> {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-          return const HomePage(); // User is logged in
+          return const HomePage();
         } else {
-          return const LoginPage(); // User is not logged in
+          return const LoginPage();
         }
       },
     );
