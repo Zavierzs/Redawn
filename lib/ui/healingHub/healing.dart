@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide SearchBar;
 import 'component/searchbar.dart';
 import 'component/post.dart';
+import 'package:redawn/theme.dart';
 
 class HealingHub extends StatelessWidget {
   final List<Map<String, dynamic>> posts = [
@@ -85,9 +86,6 @@ class HealingHub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.teal,
-      ),
       body: Column(
         children: [
           Padding(
@@ -96,7 +94,7 @@ class HealingHub extends StatelessWidget {
               children: [
                 Expanded(child: SearchBar()),
                 IconButton(
-                  icon: Icon(Icons.document_scanner, color: Colors.teal),
+                  icon: Icon(Icons.document_scanner, color: AppTheme.buttonColor),
                   onPressed: () {
                     Navigator.pushNamed(context, '/healingSide');
                   },

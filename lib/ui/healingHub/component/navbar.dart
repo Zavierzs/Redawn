@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:redawn/theme.dart';
 
 class NavBar extends StatelessWidget {
   final Function(int) onTabChange; // Callback to handle tab change
@@ -9,20 +10,41 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          TextButton(
-            onPressed: () {
-              onTabChange(0); // Switch to the History tab
-            },
-            child: Text('History', style: TextStyle(color: Colors.teal)),
-          ),
-          TextButton(
-            onPressed: () {
-              onTabChange(1); // Switch to the Favourites tab
-            },
-            child: Text('Favourites', style: TextStyle(color: Colors.teal)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () {
+                  onTabChange(0); // Switch to the History tab
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.history,
+                        color: AppTheme.buttonColor), 
+                    const SizedBox(width: 4), 
+                    Text('History',
+                        style: TextStyle(color: AppTheme.buttonColor)),
+                  ],
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  onTabChange(1); // Switch to the Favourites tab
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.favorite,
+                        color: AppTheme.buttonColor), 
+                    const SizedBox(width: 4), 
+                    Text('Favourites',
+                        style: TextStyle(color: AppTheme.buttonColor)),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

@@ -53,7 +53,7 @@ class _MoodCalendarState extends State<MoodCalendar> {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFFFFD6C9), // Updated color to FFD6C9
+                        color: AppTheme.buttonColor, 
                       ),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,

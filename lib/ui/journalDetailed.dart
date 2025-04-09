@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../controllers/journalControllers.dart';
+import 'package:redawn/theme.dart';
 
 class JournalDetailed extends StatelessWidget {
   final DateTime selectedDate;
@@ -42,11 +43,14 @@ class JournalDetailed extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Journal Entry'),
-        backgroundColor: Colors.teal,
+        title: const Text(
+          'Journal Entry',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: AppTheme.buttonColor,
       ),
       body: SingleChildScrollView(
-        // Wrap the body in a SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -63,12 +67,12 @@ class JournalDetailed extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.teal),
+                    color: AppTheme.buttonColor),
               ),
               const SizedBox(height: 8),
               Text(
                 'Express your feelings—whether it\'s joy, sadness, or anything in between.',
-                style: TextStyle(fontSize: 16, color: Colors.teal.shade700),
+                style: TextStyle(fontSize: 16, color: AppTheme.buttonColor),
               ),
               const SizedBox(height: 16),
               TextField(
@@ -95,11 +99,18 @@ class JournalDetailed extends StatelessWidget {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content: Text('Please enter your feelings!')),
+                            content: Text('Please enter your feelings!'),
+                          ),
                         );
                       }
                     },
-                    child: const Text('Save'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppTheme.secondaryColor,
+                    ),
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -108,7 +119,10 @@ class JournalDetailed extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red.shade300,
                     ),
-                    child: const Text('Cancel'),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ],
               ),

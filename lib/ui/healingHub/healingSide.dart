@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'component/navbar.dart';
 import 'component/post.dart';
+import 'package:redawn/theme.dart';
 
 class HealingSide extends StatefulWidget {
   final String title;
@@ -53,8 +54,12 @@ class _HealingSideState extends State<HealingSide> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-        backgroundColor: Colors.teal,
+        title: Text(
+          widget.title,
+          style: const TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: AppTheme.buttonColor,
       ),
       body: Column(
         children: [
