@@ -6,6 +6,60 @@ Redawn is a Flutter-based application designed to address a modern challenge tha
 
 ---
 
+## Setup Instructions
+
+To run the Redawn Flutter application on your local machine, follow these steps:
+
+### Prerequisites
+
+1. **Install Flutter**:
+
+   - Download and install Flutter from the [official Flutter website](https://flutter.dev/docs/get-started/install).
+   - Ensure that the Flutter SDK is added to your system's PATH.
+
+2. **Install Dart**:
+
+   - Dart is included with Flutter, but ensure it is properly configured.
+
+3. **Install Android Studio (for Android)**:
+
+   - Install Android Studio and set up the Android SDK.
+   - Add the Android SDK to your PATH.
+
+4. **Install Xcode (for iOS)**:
+
+   - For macOS users, install Xcode from the App Store.
+   - Configure Xcode for Flutter development.
+
+5. **Install Visual Studio (for Windows)**:
+
+   - For Windows desktop support, install Visual Studio with the "Desktop development with C++" workload.
+
+6. **Install Dependencies**:
+   - Ensure you have `git` installed for cloning the repository.
+   - Install Firebase CLI for Firebase integration.
+
+---
+
+### Steps to Run the Application
+
+1. **Clone the Repository**:  
+   Clone the Redawn repository to your local machine:
+
+   ```bash
+   git clone https://github.com/your-repo/redawn.git
+   cd redawn
+
+   ```
+
+2. **Install Flutter Dependencies**:
+   flutter pub get
+
+3. **Run the application**:
+   flutter run
+
+---
+
 ## Introduction
 
 ### Problem Statement
@@ -32,7 +86,7 @@ Redawn is designed for the following groups:
 
 ### Sustainable Development Goals (SDGs)
 
-Redawn aligns with **SDG 3: Good Health and Well-Being**, which aims to ensure healthy lives and promote well-being for all at all ages. By addressing mental health challenges, Redawn contributes to creating a healthier and more inclusive society, helping us to identify the mental issue earlier and lower the suicide rate.
+Redawn aligns with **SDG 3: Good Health and Well-Being**, which aims to ensure healthy lives and promote well-being for all at all ages. By addressing mental health challenges, Redawn contributes to creating a healthier and more inclusive society, helping us to identify the mental issue earlier and lower the suicide rate. We have also targetted **SDG 10: Reduced Inequality**, by ensuring all individuals have access to mental health services, support, and opportunities for social inclusion.
 
 ---
 
