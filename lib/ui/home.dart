@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:redawn/ui/badMoodNotification.dart';
 import 'package:redawn/ui/crisisAlertNotification.dart';
 import 'package:intl/intl.dart';
+import 'aiChatPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -51,9 +52,7 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(pageTitles[_selectedIndex]),
       ),
-      body: Center(
-        child: widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
@@ -115,17 +114,19 @@ class HomePageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController _chatController = TextEditingController();
+
     return Container(
       color: Colors.white,
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 40),
+            const SizedBox(height: 10),
             const CircleAvatar(
               radius: 40,
-              backgroundColor: Colors.yellow,
+              backgroundColor: AppTheme.primaryColor,
               child: Icon(Icons.person, size: 40, color: Colors.black),
             ),
             const SizedBox(height: 10),
@@ -199,6 +200,37 @@ class HomePageContent extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+            const SizedBox(height: 20),
+            // Input box for chatting with Gemini AI
+            TextField(
+              controller: _chatController,
+              decoration: InputDecoration(
+                hintText: 'Ask Gemini AI...',
+                hintStyle: const TextStyle(fontSize: 14),
+                prefixIcon: const Icon(Icons.chat),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.grey[200],
+                contentPadding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 16,
+                ),
+              ),
+              onSubmitted: (value) {
+                if (value.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AIChatPage(question: value),
+                    ),
+                  );
+                  _chatController.clear();
+                }
+              },
             ),
           ],
         ),
