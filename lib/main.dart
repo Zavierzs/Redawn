@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 import 'package:redawn/services/auth_service.dart';
-
 import 'package:redawn/ui/home.dart';
 import 'package:redawn/ui/login.dart';
 import 'package:redawn/ui/signup.dart';
 import 'package:redawn/ui/userProfile.dart';
-
+import 'package:redawn/ui/journal.dart';
+import 'package:redawn/ui/mood_analysis.dart';
+import 'package:redawn/ui/healingHub/healingSide.dart';
 import 'components/button.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
@@ -74,6 +74,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/signup': (context) => const SignUpPage(),
         '/profile': (context) => const UserProfilePage(),
+        '/journal': (context) => MoodCalendar(),
+        '/healingSide': (context) => HealingSide(title: 'My Healing Record'),
       },
     );
   }
@@ -119,9 +121,9 @@ class _AuthWrapperState extends State<AuthWrapper> {
           return const Center(child: CircularProgressIndicator());
         }
         if (snapshot.hasData) {
-          return const HomePage(); // User is logged in
+          return const HomePage();
         } else {
-          return const LoginPage(); // User is not logged in
+          return const LoginPage();
         }
       },
     );
