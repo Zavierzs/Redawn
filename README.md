@@ -32,7 +32,7 @@ Redawn is designed for the following groups:
 
 ### Sustainable Development Goals (SDGs)
 
-Redawn aligns with **SDG 3: Good Health and Well-Being**, which aims to ensure healthy lives and promote well-being for all at all ages. By addressing mental health challenges, Redawn contributes to creating a healthier and more inclusive society, helping us to identify the mental issue earlier and lower the suicide rate.
+Redawn aligns with **SDG 3: Good Health and Well-Being**, which aims to ensure healthy lives and promote well-being for all at all ages. By addressing mental health challenges, Redawn contributes to creating a healthier and more inclusive society, helping us to identify the mental issue earlier and lower the suicide rate. We have also targetted **SDG 10: Reduced Inequality**, by ensuring all individuals have access to mental health services, support, and opportunities for social inclusion.
 
 ---
 
