@@ -126,7 +126,7 @@ class HomePageContent extends StatelessWidget {
             const SizedBox(height: 10),
             const CircleAvatar(
               radius: 40,
-              backgroundColor: AppTheme.primaryColor,
+              backgroundColor: AppTheme.secondaryColor,
               child: Icon(Icons.person, size: 40, color: Colors.black),
             ),
             const SizedBox(height: 10),
@@ -202,11 +202,11 @@ class HomePageContent extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            // Input box for chatting with Gemini AI
             TextField(
               controller: _chatController,
+              readOnly: true, 
               decoration: InputDecoration(
-                hintText: 'Ask Gemini AI...',
+                hintText: 'Chat with MeowMi',
                 hintStyle: const TextStyle(fontSize: 14),
                 prefixIcon: const Icon(Icons.chat),
                 border: OutlineInputBorder(
@@ -214,22 +214,19 @@ class HomePageContent extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: Colors.grey[200],
+                fillColor: AppTheme.primaryColor,
                 contentPadding: const EdgeInsets.symmetric(
                   vertical: 12,
                   horizontal: 16,
                 ),
               ),
-              onSubmitted: (value) {
-                if (value.isNotEmpty) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AIChatPage(question: value),
-                    ),
-                  );
-                  _chatController.clear();
-                }
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AIChatPage(),
+                  ),
+                );
               },
             ),
           ],

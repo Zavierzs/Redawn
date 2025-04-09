@@ -34,14 +34,11 @@ class _MoodAnalysisPageState extends State<MoodAnalysisPage> {
 
   Future<Map<String, dynamic>> fetchMoodData(String date) async {
     try {
-      // Get the current user's ID
       String userId = FirebaseAuth.instance.currentUser?.uid ?? "guest_user";
 
-      // Reference to the Firestore collection
       DocumentReference userDoc =
           FirebaseFirestore.instance.collection("users").doc(userId);
 
-      // Fetch all mood entries for the given date
       QuerySnapshot moodEntriesSnapshot = await userDoc
           .collection("moods")
           .doc(date)
@@ -62,7 +59,6 @@ class _MoodAnalysisPageState extends State<MoodAnalysisPage> {
       int index = 0;
 
       for (var doc in moodEntriesSnapshot.docs) {
-        // Fetch and transform the moodIndex value
         int originalMoodIndex = doc["moodIndex"] as int;
 
         // Add 1 to the original value
@@ -91,11 +87,10 @@ class _MoodAnalysisPageState extends State<MoodAnalysisPage> {
           ),
         );
 
-        times.add(time); // Add the time to the list
+        times.add(time); 
         index++;
       }
 
-      // Calculate the average
       double average = count > 0 ? sum / count : 0.0;
 
       return {
@@ -188,18 +183,26 @@ class _MoodAnalysisPageState extends State<MoodAnalysisPage> {
                                           reservedSize: 40,
                                           interval: 1,
                                           getTitlesWidget: (value, meta) {
-                                            if (value.toInt() >= 0 &&
-                                                value.toInt() <= 4) {
-                                              return Text(
-                                                value.toInt().toString(),
-                                                style: TextStyle(
-                                                  color: AppTheme
-                                                      .buttonColor, // Font color
-                                                  fontSize: 12,
-                                                ),
-                                              );
+                                            switch (value.toInt()) {
+                                              case 4:
+                                                return const Text('Happy',
+                                                    style: TextStyle(
+                                                        fontSize: 10));
+                                              case 3:
+                                                return const Text('Relaxed',
+                                                    style: TextStyle(
+                                                        fontSize: 10));
+                                              case 2:
+                                                return const Text('Sad',
+                                                    style: TextStyle(
+                                                        fontSize: 10));
+                                              case 1:
+                                                return const Text('Angry',
+                                                    style: TextStyle(
+                                                        fontSize: 10));
+                                              default:
+                                                return const SizedBox.shrink();
                                             }
-                                            return const SizedBox.shrink();
                                           },
                                         ),
                                       ),
@@ -214,7 +217,7 @@ class _MoodAnalysisPageState extends State<MoodAnalysisPage> {
                                                 times[value.toInt()],
                                                 style: TextStyle(
                                                   color: AppTheme
-                                                      .buttonColor, // Font color
+                                                      .buttonColor, 
                                                   fontSize: 12,
                                                 ),
                                               );
@@ -242,12 +245,11 @@ class _MoodAnalysisPageState extends State<MoodAnalysisPage> {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        // CircularPercentIndicator Card
                         SizedBox(
                           width: double.infinity,
                           child: Card(
-                            color: Colors.white, // Change background to white
-                            elevation: 8, // Add shadow to the card
+                            color: Colors.white, 
+                            elevation: 8, 
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -262,7 +264,7 @@ class _MoodAnalysisPageState extends State<MoodAnalysisPage> {
                                   style: TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold,
-                                    color: AppTheme.buttonColor, // Font color
+                                    color: AppTheme.buttonColor,
                                   ),
                                 ),
                                 progressColor: Colors.green,
