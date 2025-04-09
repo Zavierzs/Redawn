@@ -9,6 +9,7 @@ import 'package:redawn/ui/badMoodNotification.dart';
 import 'package:redawn/ui/crisisAlertNotification.dart';
 import 'package:redawn/ui/journal.dart';
 import 'package:intl/intl.dart';
+import 'healingHub/healing.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,7 +34,7 @@ class HomePageState extends State<HomePage> {
   static final List<Widget> widgetOptions = <Widget>[
     // Add your pages here
     const MoodAnalysisPage(),
-    const Text('Healing Hub Coming Soon'),
+    HealingHub(),
     const HomePageContent(),
     MoodCalendar(),
     const UserProfilePage(),
