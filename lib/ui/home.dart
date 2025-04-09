@@ -28,7 +28,7 @@ class HomePageState extends State<HomePage> {
     'Mood Analysis',
     'Healing Hub',
     'Home Page',
-    'Diary',
+    'Journal',
     'User Profile',
   ];
 
